@@ -1,6 +1,6 @@
 # The 2026 Raw Cashew Crop — Asia & Africa
 
-A ten-minute executive conference presentation on the 2026 raw cashew nut (RCN) season,
+A ten-minute executive conference presentation on the 2026 raw cashew nut season,
 built as a self-contained HTML deck for GitHub Pages.
 
 **Live:** https://omiiii21.github.io/Cashew-Research-Presentation/
@@ -11,7 +11,7 @@ built as a self-contained HTML deck for GitHub Pages.
 
 2026 production is **reduced** versus 2025 — but 2025 was the all-time record, so this is
 still the **second-largest crop in history**. The decline is ~3–6% on the trade basis
-(~6.0 Mn t against 6.2–6.4 Mn t). The story that actually cost money was not tonnage:
+(about 6.0 million tonnes against 6.2–6.4 million). The story that actually cost money was not tonnage:
 West African outturns fell 2.0–2.5 lbs per 80 kg bag, so **effective kernel availability
 fell roughly twice as fast as raw tonnage**.
 
@@ -25,8 +25,8 @@ fell roughly twice as fast as raw tonnage**.
 | 4 | Asia | India, Vietnam, Cambodia, Indonesia |
 | 5 | West Africa | Côte d'Ivoire, Ghana, Nigeria, Benin, Togo, Senegal, Guinea-Bissau, Gambia, Burkina Faso |
 | 6 | Size versus export | The India-vs-Vietnam contrast |
-| 7 | Quality | Outturn/KOR by origin, and what 2 lbs costs |
-| 8 | Prices | RCN and kernel, and the processor squeeze |
+| 7 | Quality | Kernel per bag by country, and what losing 2 lbs costs |
+| 8 | Prices | Raw nuts and kernel, and the squeeze on factories |
 | 9 | Outlook | Three risks into 2027 |
 | 10 | Contact | Visiting card |
 
@@ -65,14 +65,14 @@ and **VINACAS** for Vietnam, and Cambodian customs / CAC for Cambodia.
 Deliberate choices worth knowing before you take questions:
 
 - **One statistical universe only.** All figures are on the ACA/INC *trade* basis. FAOSTAT
-  puts the world ~60% lower (≈3.9 Mn t) and must never share a table with these numbers.
+  puts the world ~60% lower (about 3.9 million tonnes) and must never share a table with these numbers.
 - **Ranges, not false precision.** Where sources disagree the deck shows the spread and says
-  it is contested — India (770–810k t), Ghana (150k vs 250k), Guinea-Bissau (150k vs 300k),
+  it is contested — India (770,000–810,000 tonnes), Ghana (150,000 vs 250,000), Guinea-Bissau (150,000 vs 300,000),
   Cambodia, Tanzania.
 - **Gaps are stated, not filled.** No 2026 production figure is published for Togo, The Gambia
-  or Mozambique; no 2026 outturn data exists for India's or Cambodia's own crops. The deck
+  or Mozambique; no 2026 kernel-yield data exists for India's or Cambodia's own crops. The deck
   says so rather than estimating.
-- **Two claims are explicitly corrected.** India's "825,000 t" is a *prior record ceiling*,
+- **Two claims are explicitly corrected.** India's "825,000 tonnes" is a *prior record*,
   not a 2026 estimate. Vietnam's "30–50% crop collapse" is refuted — national output rose 4.6%;
   the alarming figures were single cooperatives and communes.
 - Charts plot midpoints; the slides carry the ranges in text.

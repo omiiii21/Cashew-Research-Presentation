@@ -41,7 +41,7 @@
   --c6: #8C5A6E;
 
   /* --- geometry --- */
-  --pad: clamp(2rem, 4.5vw, 5.5rem);
+  --pad: clamp(1.5rem, min(4.5vw, 7vh), 5.5rem);
   --radius: 14px;
   --rule: 1px solid var(--paper-edge);
 
@@ -187,26 +187,26 @@ body::before {
 h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; }
 
 h1 {
-  font-size: clamp(2.6rem, 6.4vw, 5.6rem);
+  font-size: clamp(2.4rem, min(6.4vw, 11vh), 5.6rem);
   line-height: 1.02;
   letter-spacing: -.022em;
 }
 
 h2 {
-  font-size: clamp(1.75rem, 3.5vw, 3.05rem);
+  font-size: clamp(1.55rem, min(3.5vw, 5.6vh), 3.05rem);
   line-height: 1.08;
   letter-spacing: -.018em;
   margin-bottom: .5rem;
 }
 
 h3 {
-  font-size: clamp(1.02rem, 1.5vw, 1.35rem);
+  font-size: clamp(1rem, min(1.5vw, 2.5vh), 1.35rem);
   line-height: 1.2;
   letter-spacing: -.008em;
 }
 
 .lede {
-  font-size: clamp(1rem, 1.42vw, 1.32rem);
+  font-size: clamp(.92rem, min(1.42vw, 2.35vh), 1.32rem);
   line-height: 1.5;
   color: var(--ink-soft);
   max-width: 62ch;
@@ -214,7 +214,7 @@ h3 {
 }
 
 .dek {
-  font-size: clamp(.86rem, 1.05vw, 1.02rem);
+  font-size: clamp(.8rem, min(1.05vw, 1.75vh), 1.02rem);
   line-height: 1.55;
   color: var(--ink-soft);
   max-width: 74ch;
@@ -354,7 +354,7 @@ strong, b { font-weight: 640; color: var(--ink); }
   background: var(--paper);
   border: var(--rule);
   border-radius: var(--radius);
-  padding: clamp(.95rem, 1.5vw, 1.5rem);
+  padding: clamp(.8rem, min(1.5vw, 2.4vh), 1.5rem);
   box-shadow: 0 1px 2px rgba(42,31,22,.04), 0 8px 26px -18px rgba(42,31,22,.3);
   position: relative;
   overflow: hidden;
@@ -385,7 +385,7 @@ strong, b { font-weight: 640; color: var(--ink); }
 
 .stat__value {
   font-family: var(--display);
-  font-size: clamp(1.9rem, 4vw, 3.4rem);
+  font-size: clamp(1.7rem, min(4vw, 6.4vh), 3.4rem);
   font-weight: 600;
   line-height: .96;
   letter-spacing: -.03em;
@@ -407,7 +407,7 @@ strong, b { font-weight: 640; color: var(--ink); }
 }
 
 .stat__label {
-  font-size: clamp(.72rem, .88vw, .85rem);
+  font-size: clamp(.68rem, min(.88vw, 1.45vh), .85rem);
   color: var(--ink-soft);
   line-height: 1.35;
 }
@@ -444,7 +444,7 @@ strong, b { font-weight: 640; color: var(--ink); }
   min-height: 0;
 }
 
-table { border-collapse: collapse; width: 100%; font-size: clamp(.7rem, .92vw, .89rem); }
+table { border-collapse: collapse; width: 100%; font-size: clamp(.66rem, min(.92vw, 1.5vh), .89rem); }
 
 thead th {
   position: sticky;
@@ -633,7 +633,7 @@ tr.is-total td {
 .bullets li {
   position: relative;
   padding-left: 1.65rem;
-  font-size: clamp(.82rem, 1.02vw, .99rem);
+  font-size: clamp(.76rem, min(1.02vw, 1.7vh), .99rem);
   line-height: 1.5;
   color: var(--ink-soft);
 }
@@ -867,6 +867,23 @@ tr.is-total td {
 .help dt { font-family: var(--mono); font-size: .78rem; color: var(--terracotta); font-weight: 620; white-space: nowrap; }
 .help dd { margin: 0; color: var(--ink-soft); }
 
+/* "Resourced from" tag that opens every source footer */
+.srcline__label {
+  display: inline-block;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-right: .55rem;
+  white-space: nowrap;
+}
+
+.srcline__label::after {
+  content: " —";
+  color: var(--ink-faint);
+  font-weight: 500;
+}
+
 kbd {
   font-family: var(--mono);
   font-size: .74rem;
@@ -885,6 +902,7 @@ kbd {
   margin-top: auto;
   padding-top: .75rem;
   padding-right: clamp(7rem, 16vw, 15rem);
+  padding-left: 0;
   font-size: clamp(.6rem, .72vw, .7rem);
   color: var(--ink-faint);
   line-height: 1.4;

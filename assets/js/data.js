@@ -8,8 +8,8 @@
    Charts plot midpoints; the slides show the ranges in text.
    Contested figures are marked and never silently averaged.
 
-   All production values are in THOUSAND TONNES ('000 t) of
-   raw cashew nut, on the TRADE basis (ACA/INC), never FAOSTAT.
+   All production values are in THOUSAND TONNES of raw cashew
+   nut, on the TRADE basis (ACA/INC), never FAOSTAT.
    Mixing those two universes is the classic cashew-deck error:
    FAOSTAT puts the world ~60% lower.
    ============================================================ */
@@ -36,7 +36,7 @@ window.CHARTS = (function () {
     },
 
     /* --------------------------------------------------------
-       Slide 3 — country production, 2026 vs 2025 ('000 t)
+       Slide 3 — country production, 2026 vs 2025 (thousand tonnes)
        Ghost bar = 2025. Omitted where no 2025 figure exists.
        -------------------------------------------------------- */
     countryProduction: {
@@ -49,10 +49,10 @@ window.CHARTS = (function () {
         { label: 'Nigeria',        a:  375, b:  375, color: FLAT, note: '≈ flat',    noteColor: FLAT },
         { label: 'Vietnam',        a:  317, b:  309, color: UP,   note: '▲ 4.6%',    noteColor: UP },
         { label: 'Guinea-Bissau',  a:  300, b: null, color: UP,   note: '▲ up',      noteColor: UP },
-        { label: 'Burkina Faso',   a:  280, b: null, color: FLAT, note: 'no base',   noteColor: FLAT },
-        { label: 'Ghana',          a:  200, b:  275, color: DOWN, note: '▼ disputed',noteColor: DOWN },
+        { label: 'Burkina Faso',   a:  280, b: null, color: FLAT, note: 'no 2025 data',   noteColor: FLAT },
+        { label: 'Ghana',          a:  200, b:  275, color: DOWN, note: '▼ down',noteColor: DOWN },
         { label: 'Benin',          a:  175, b:  175, color: FLAT, note: '≈ flat',    noteColor: FLAT },
-        { label: 'Guinea',         a:  150, b: null, color: FLAT, note: 'no base',   noteColor: FLAT },
+        { label: 'Guinea',         a:  150, b: null, color: FLAT, note: 'no 2025 data',   noteColor: FLAT },
         { label: 'Indonesia',      a:  150, b:  150, color: FLAT, note: '≈ flat',    noteColor: FLAT },
         { label: 'Senegal',        a:   52, b:   52, color: FLAT, note: '≈ flat',    noteColor: FLAT }
       ]
@@ -77,8 +77,9 @@ window.CHARTS = (function () {
     },
 
     /* --------------------------------------------------------
-       Slide 4 — Vietnam's RCN import book, H1 2026 (share %)
-       Vietnam imported 1.81 Mt to 15 July 2026.
+       Slide 4 — where Vietnam's raw nuts came from, first half
+       2026 (share %). Vietnam bought in 1.81 million tonnes
+       to 15 July 2026.
        -------------------------------------------------------- */
     vietnamImports: {
       parts: [
@@ -94,24 +95,24 @@ window.CHARTS = (function () {
        Weights are proportional to real tonnages, not decorative.
        -------------------------------------------------------- */
     sizeVsExport: {
-      leftTitle: 'RAW NUT ORIGINS',
-      midTitle: 'PROCESSING',
-      rightTitle: 'KERNEL OUT',
+      leftTitle: 'RAW NUTS GROWN · MILLION TONNES',
+      midTitle: "WHERE THEY'RE SHELLED",
+      rightTitle: 'KERNEL PRODUCED · THOUSAND TONNES',
       left: [
-        { label: 'West Africa',  sub: '~2.95 Mt', value: 295, fill: '#FDFAF3', stroke: '#C05F3C' },
-        { label: 'Cambodia',     sub: '~0.96 Mt', value: 96,  fill: '#FDFAF3', stroke: '#D9A441' },
-        { label: 'East Africa',  sub: '~0.80 Mt', value: 80,  fill: '#FDFAF3', stroke: '#7A5638' },
-        { label: 'India crop',   sub: '0.79 Mt',  value: 79,  fill: '#FDFAF3', stroke: '#5B7C8D' },
-        { label: 'Vietnam crop', sub: '0.32 Mt',  value: 32,  fill: '#FDFAF3', stroke: '#8C5A6E' }
+        { label: 'West Africa',  sub: '2.95', value: 295, fill: '#FDFAF3', stroke: '#C05F3C' },
+        { label: 'Cambodia',     sub: '0.96', value: 96,  fill: '#FDFAF3', stroke: '#D9A441' },
+        { label: 'East Africa',  sub: '0.80', value: 80,  fill: '#FDFAF3', stroke: '#7A5638' },
+        { label: 'India crop',   sub: '0.79',  value: 79,  fill: '#FDFAF3', stroke: '#5B7C8D' },
+        { label: 'Vietnam crop', sub: '0.32',  value: 32,  fill: '#FDFAF3', stroke: '#8C5A6E' }
       ],
       mid: [
-        { label: 'VIETNAM',  sub: 'imports 1.81 Mt', value: 210, fill: '#4A3428', stroke: '#4A3428', textFill: '#F7F1E4', subFill: 'rgba(247,241,228,.7)' },
-        { label: 'INDIA',    sub: 'imports 0.58 Mt', value: 130, fill: '#C05F3C', stroke: '#C05F3C', textFill: '#FFFFFF', subFill: 'rgba(255,255,255,.8)' },
-        { label: 'AT ORIGIN',sub: 'Africa, rising',  value: 70,  fill: '#55703F', stroke: '#55703F', textFill: '#FFFFFF', subFill: 'rgba(255,255,255,.8)' }
+        { label: 'VIETNAM',  sub: 'buys in 1.81', value: 210, fill: '#4A3428', stroke: '#4A3428', textFill: '#F7F1E4', subFill: 'rgba(247,241,228,.7)' },
+        { label: 'INDIA',    sub: 'buys in 0.58', value: 130, fill: '#C05F3C', stroke: '#C05F3C', textFill: '#FFFFFF', subFill: 'rgba(255,255,255,.8)' },
+        { label: 'IN AFRICA',sub: 'growing fast',  value: 70,  fill: '#55703F', stroke: '#55703F', textFill: '#FFFFFF', subFill: 'rgba(255,255,255,.8)' }
       ],
       right: [
-        { label: 'EXPORTED',  sub: 'VN 767k t · IN 36k t', value: 200, fill: '#FDFAF3', stroke: '#55703F' },
-        { label: 'INDIA EATS',sub: '350k+ t at home',      value: 150, fill: '#FDFAF3', stroke: '#C05F3C' }
+        { label: 'EXPORTED',  sub: 'Vietnam 767 · India 36', value: 200, fill: '#FDFAF3', stroke: '#55703F' },
+        { label: 'INDIA EATS',sub: '350+ eaten in India',      value: 150, fill: '#FDFAF3', stroke: '#C05F3C' }
       ],
       links: [
         { from: 'L0', to: 'M0', weight: 9,  color: '#C05F3C' },
@@ -137,9 +138,9 @@ window.CHARTS = (function () {
     kernelPrices: {
       dp: 2,
       items: [
-        { label: 'India',         a: 4.03, b: 3.98, color: '#9C3D22', note: 'frozen 12 months', noteColor: '#8A3319' },
-        { label: "Côte d'Ivoire", a: 3.45, b: 3.55, color: '#D9A441', note: 'African premium',  noteColor: '#B07E22' },
-        { label: 'Vietnam',       a: 3.18, b: 3.30, color: '#55703F', note: 'eased',            noteColor: '#3F5730' }
+        { label: 'India',         a: 4.03, b: 3.98, color: '#9C3D22', note: 'same price all year', noteColor: '#8A3319' },
+        { label: "Côte d'Ivoire", a: 3.45, b: 3.55, color: '#D9A441', note: 'premium price',  noteColor: '#B07E22' },
+        { label: 'Vietnam',       a: 3.18, b: 3.30, color: '#55703F', note: 'slipped',            noteColor: '#3F5730' }
       ]
     },
 
@@ -149,11 +150,11 @@ window.CHARTS = (function () {
        -------------------------------------------------------- */
     scissor: {
       items: [
-        { label: 'VN raw-nut import bill', value:  12.3 },
-        { label: 'VN raw-nut volume',      value:   4.0 },
-        { label: 'VN kernel export value', value:   2.0 },
-        { label: 'VN kernel volume',       value:  -0.9 },
-        { label: 'India kernel realised',  value:  -6.5 },
+        { label: 'Vietnam raw nut bill', value:  12.3 },
+        { label: 'Vietnam raw nut volume',      value:   4.0 },
+        { label: 'Vietnam kernel sales', value:   2.0 },
+        { label: 'Vietnam kernel volume',       value:  -0.9 },
+        { label: 'India kernel price',  value:  -6.5 },
         { label: 'India kernel volume',    value:  -9.5 }
       ]
     }
