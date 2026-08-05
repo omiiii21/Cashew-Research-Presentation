@@ -81,6 +81,36 @@ window.CHARTS = (function () {
     },
 
     /* --------------------------------------------------------
+       Slide 4 — Asia's crop, all three countries on ONE scale.
+       They used to sit in separate cards with India quoted in
+       thousand tonnes and Cambodia in million, which made them
+       impossible to compare at a glance. Same unit, one chart.
+       -------------------------------------------------------- */
+    asiaCrop: {
+      dp: 0,
+      single: true,
+      axis: true,
+      items: [
+        { label: 'Cambodia',  a: 960, color: '#55703F', note: 'grew ~3%',          noteColor: '#3F5730' },
+        { label: 'India',     a: 790, color: '#9A876F', note: 'no official figure', noteColor: '#6A5644' },
+        { label: 'Vietnam',   a: 323, color: '#55703F', note: 'grew 4.6%',          noteColor: '#3F5730' },
+        { label: 'Indonesia', a: 150, color: '#9A876F', note: 'about the same',     noteColor: '#6A5644' }
+      ]
+    },
+
+    /* --------------------------------------------------------
+       Slide 4 — the myth, in one picture. The trade press ran a
+       Vietnamese crop-collapse story all spring; the national
+       figure went the other way.
+       -------------------------------------------------------- */
+    vietnamMyth: {
+      items: [
+        { label: 'What was reported', value: -40.0 },
+        { label: 'What happened',     value:   4.6 }
+      ]
+    },
+
+    /* --------------------------------------------------------
        Slide 4 — where Vietnam's raw nuts came from, first half
        2026 (share %). Vietnam bought in 1.81 million tonnes
        to 15 July 2026.

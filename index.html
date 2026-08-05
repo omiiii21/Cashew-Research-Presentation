@@ -131,46 +131,36 @@
     data-notes="Asia actually grew MORE this year, which surprises most people, because the trade press ran a Vietnamese crop collapse story all spring.|Kill that story clearly. Vietnam's own agriculture ministry says national output was UP 4.6 percent — 323,400 tonnes in the first half, and since Vietnam harvests February to May that is effectively the full year. The minus-40-percent figure everyone quoted came from a single cooperative of a thousand hectares, in a province with a hundred and seventy-six thousand. You cannot add up disaster reports from individual villages and call it a national crop.|India: be careful. There is no official 2026 figure at all — the government body hasn't published one. What we do have is the Konkan belt, about a third of the crop, and it is down 11 percent: Maharashtra minus 5, Karnataka minus 20, Goa minus 28. If someone quotes 825,000 tonnes at you, that is an old record being misread, not this year's crop.|Cambodia is now the country that decides how much raw nut this region has, and it has the worst statistics of anyone. Its first-half exports alone are bigger than most people's estimate of its full-year crop. The Cambodian association says exports grew 28 percent; Vietnamese customs says 10.3. Nobody reconciles that.|The pie: Cambodia alone sends Vietnam more raw nuts than Vietnam grows five times over. That is a new dependency — bad weather in Cambodia now hits Vietnamese factories directly, which was not true a few years ago. Come back to this on the risks slide.|If asked about the rest of Asia: Indonesia about 150,000 tonnes, flat, best kernel yield in the region but too small to matter, and the only origin where farmers were paid less this year. Sri Lanka, Myanmar, Thailand and the Philippines are all small with no reliable 2026 reporting.">
     <div class="slide__head">
       <p class="eyebrow" data-anim style="--i:0">Asia</p>
-      <h2 data-anim style="--i:1">Asia grew more — and one popular story is wrong</h2>
+      <h2 data-anim style="--i:1">Asia grew more — Vietnam did not collapse</h2>
     </div>
 
     <div class="slide__body">
-      <div class="cols cols--3">
-        <div class="card card--accent" data-anim style="--i:2">
-          <p class="card__title">India</p>
-          <div class="stat">
-            <div class="stat__value">770–810<span class="stat__unit">thousand tonnes</span></div>
-            <div><span class="delta delta--flat">≈ about the same</span></div>
-            <div class="stat__label">No official figure published this year</div>
+      <div class="cols cols--7g5">
+        <div class="card" data-anim style="--i:2">
+          <p class="card__title">Asia's 2026 crop · thousand tonnes</p>
+          <div class="chart-fill" data-chart="compareBars" data-spec="asiaCrop" style="min-height:150px"></div>
+          <div class="legend" style="margin-top:.7rem">
+            <span class="legend__item"><span class="legend__swatch" style="background:#55703F"></span>grew this year</span>
+            <span class="legend__item"><span class="legend__swatch" style="background:#9A876F"></span>about the same</span>
           </div>
         </div>
 
-        <div class="card card--leaf" data-anim style="--i:3">
-          <p class="card__title">Vietnam</p>
-          <div class="stat">
-            <div class="stat__value stat__value--leaf">323<span class="stat__unit">thousand tonnes</span></div>
-            <div><span class="delta delta--up">▲ 4.6%</span></div>
-            <div class="stat__label">The "30–50% collapse" never happened</div>
+        <div class="stack">
+          <div class="card card--accent card--grow" data-anim style="--i:3">
+            <p class="card__title">Vietnam's crop · % change</p>
+            <div class="chart-fill" data-chart="deltaBars" data-spec="vietnamMyth" style="min-height:96px"></div>
+            <p class="dek" style="margin-top:.4rem">The scary numbers came from <strong>single farms</strong>, not the country.</p>
           </div>
-        </div>
 
-        <div class="card card--gold" data-anim style="--i:4">
-          <p class="card__title">Cambodia</p>
-          <div class="stat">
-            <div class="stat__value stat__value--gold">0.9–1.0<span class="stat__unit">million tonnes</span></div>
-            <div><span class="delta delta--up">▲ exports up 10–28%</span></div>
-            <div class="stat__label">Now the region's swing supplier</div>
+          <div class="card card--grow" data-anim style="--i:4">
+            <p class="card__title">Where Vietnam buys its raw nuts</p>
+            <div data-chart="shareBar" data-spec="vietnamImports" style="height:min(92px,11vh)"></div>
+            <p class="dek" style="margin-top:.5rem">Cambodia sends <strong>more than Vietnam grows 5× over</strong>.</p>
           </div>
         </div>
       </div>
 
-      <div class="card" data-anim style="--i:5">
-        <p class="card__title">Where Vietnam's 1.81 million tonnes of raw nuts came from</p>
-        <div data-chart="shareBar" data-spec="vietnamImports" style="height:min(110px,14vh)"></div>
-        <p class="dek" style="margin-top:.7rem">Cambodia alone sends Vietnam <strong>more than Vietnam grows five times over</strong>.</p>
-      </div>
-
-      <p class="srcline" data-anim style="--i:6"><span class="srcline__label">Resourced from</span>Vietnam Ministry of Agriculture &amp; Environment · VINACAS · Cambodian customs · India's DCCD · APEDA</p>
+      <p class="srcline" data-anim style="--i:5"><span class="srcline__label">Resourced from</span>Vietnam Ministry of Agriculture &amp; Environment · VINACAS · Cambodian customs · India's DCCD · APEDA</p>
     </div>
   </section>
 
