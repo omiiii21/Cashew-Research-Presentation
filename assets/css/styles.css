@@ -157,7 +157,7 @@ body::before {
 @media (prefers-reduced-motion: reduce) {
   .slide, [data-anim] { transition: none !important; animation: none !important; }
   [data-anim] { opacity: 1 !important; transform: none !important; }
-  .kernel__drift, .pip { animation: none !important; }
+  .flow__pulse, .kernel__drift, .pip { animation: none !important; }
 }
 
 /* ============================================================
@@ -330,6 +330,18 @@ strong, b { font-weight: 640; color: var(--ink); }
 .cols > .card, .cols > .stack > .card { display: flex; flex-direction: column; }
 .cols > .card > .fine:last-child { margin-top: auto; padding-top: .5rem; }
 .cols > .stack { justify-content: center; }
+
+/* The main content row claims the leftover height instead of leaving a dead
+   band under it, and a hero chart stretches to fill its card. Charts read
+   their pixel height from layout, so this is what makes the visuals large. */
+.slide__body > .cols { flex: 1 1 auto; min-height: 0; }
+.cols > .stack > .card--grow { flex: 1 1 auto; }
+
+.chart-fill {
+  flex: 1 1 auto;
+  min-height: 110px;
+  width: 100%;
+}
 
 /* Vertical rhythm: .srcline already carries margin-top:auto to pin itself to
    the bottom, but a single auto margin swallows ALL the free space and leaves
@@ -557,6 +569,28 @@ tr.is-total td {
 .legend__item { display: inline-flex; align-items: center; gap: .4rem; font-size: clamp(.68rem, .82vw, .8rem); color: var(--ink-soft); }
 .legend__swatch { width: 11px; height: 11px; border-radius: 3px; flex: 0 0 auto; }
 .legend__swatch--line { height: 3px; border-radius: 2px; width: 16px; }
+
+/* ============================================================
+   Trade-flow diagram — where raw nuts travel
+   ============================================================ */
+
+.flow__arc { fill: none; stroke-linecap: round; opacity: .5; }
+
+.flow__pulse {
+  fill: var(--gold);
+  opacity: .95;
+  animation: pulseAlong 3.4s linear infinite;
+  offset-rotate: 0deg;
+}
+
+@keyframes pulseAlong {
+  from { offset-distance: 0%;   opacity: 0; }
+  12%  { opacity: .95; }
+  88%  { opacity: .95; }
+  to   { offset-distance: 100%; opacity: 0; }
+}
+
+.flow__node text { font-weight: 600; }
 
 /* ============================================================
    Comparison bars — India vs Vietnam

@@ -26,9 +26,9 @@
       <path d="M74 64a66 66 0 1 1 0 72"/>
     </svg>
     <div class="title__inner">
-      <p class="eyebrow" data-anim style="--i:0">Raw cashew nut market review · August 2026</p>
+      <p class="eyebrow" data-anim style="--i:0">Conference presentation · August 2026</p>
       <h1 data-anim style="--i:1">The 2026<br>Raw Cashew Crop</h1>
-      <p class="lede" data-anim style="--i:2">Smaller than last year.<br>But last year was the biggest ever.</p>
+      <p class="lede" data-anim style="--i:2">A review of the past year across Asia and Africa —<br>how much was grown, how good it was, and what it cost.</p>
       <div class="title__meta" data-anim style="--i:3">
         <div>
           <div class="title__speaker" id="speakerName">Sanjay Mengshetti</div>
@@ -45,14 +45,14 @@
   <section class="slide" data-title="The verdict"
     data-notes="Answer the question in the first fifteen seconds: the crop is SMALLER, by about 3 to 6 percent. But last year was the biggest ever, so this is still the second biggest crop on record. It is not a shortage year.|Now the chart, and this is worth dwelling on. Four different groups measured the SAME crop and got answers from 5.2 to 6.2 million tonnes. Two of them don't even agree on whether it went up or down — Rotterdam and VINACAS say up 3 percent. So whenever you quote a world number, quote a range.|Add if you like: FAOSTAT counts a different way again and lands about 60 percent lower. Never put a FAOSTAT country figure in the same table as a trade figure. It is the single most common mistake in cashew presentations.|Also worth saying: the estimates got BIGGER as the season went on, not smaller. In February the trade press predicted disaster. The African Cashew Alliance later said those reports were, in their words, at best misinformed and at worst attempts to move the market.|Then hand off to the second number: each bag gave less kernel, so the edible cashew we actually got fell about twice as fast as the crop did. That's slide seven, and it's the heart of the talk.">
     <div class="slide__head">
-      <p class="eyebrow" data-anim style="--i:0">The big question</p>
-      <h2 data-anim style="--i:1">Smaller than last year — but last year was a record</h2>
+      <p class="eyebrow" data-anim style="--i:0">How big was the crop?</p>
+      <h2 data-anim style="--i:1">Down a little from last year's record</h2>
     </div>
 
     <div class="slide__body">
       <div class="cols cols--5g7">
         <div class="stack">
-          <div class="card card--accent" data-anim style="--i:2">
+          <div class="card card--accent card--grow" data-anim style="--i:2">
             <p class="card__title">World crop, 2026</p>
             <div class="stat">
               <div class="stat__value stat__value--terracotta"><span data-count data-to="6.0" data-dp="1">6.0</span><span class="stat__unit">million tonnes</span></div>
@@ -61,7 +61,7 @@
             </div>
           </div>
 
-          <div class="card card--leaf" data-anim style="--i:3">
+          <div class="card card--leaf card--grow" data-anim style="--i:3">
             <p class="card__title">Kernel we actually got</p>
             <div class="stat">
               <div class="stat__value stat__value--leaf">−6 to −10<span class="stat__unit">%</span></div>
@@ -72,12 +72,12 @@
 
         <div class="card" data-anim style="--i:4">
           <p class="card__title">Four groups measured the same crop · million tonnes</p>
-          <div data-chart="compareBars" data-spec="globalEstimates" style="height:min(250px,30vh)"></div>
-          <div class="legend" style="margin-top:.6rem">
+          <div class="chart-fill" data-chart="compareBars" data-spec="globalEstimates"></div>
+          <div class="legend" style="margin-top:.7rem">
             <span class="legend__item"><span class="legend__swatch" style="background:#C05F3C"></span>2026</span>
             <span class="legend__item"><span class="legend__swatch" style="background:#9A876F;opacity:.42"></span>their own 2025 figure</span>
           </div>
-          <p class="fine" style="margin-top:.7rem">They don't even agree on the direction. <strong>Always quote a range.</strong></p>
+          <p class="fine" style="margin-top:.6rem">They don't even agree on the direction. <strong>Always quote a range.</strong></p>
         </div>
       </div>
 
@@ -285,42 +285,28 @@
     </div>
 
     <div class="slide__body">
-      <div class="cols cols--2">
-        <div class="card card--accent" data-anim style="--i:2">
-          <p class="card__title">Raw cashew grown at home · thousand tonnes</p>
-          <div data-chart="compareBars" data-spec="grownAtHome" style="height:min(150px,19vh)"></div>
-          <p class="dek" style="margin-top:.5rem"><strong>India grows more.</strong></p>
+      <div class="cols cols--7g5">
+        <div class="card" data-anim style="--i:2">
+          <p class="card__title">Where the world's raw nuts travel · million tonnes</p>
+          <div class="chart-fill" data-chart="tradeFlow" data-spec="nutRoutes" style="min-height:230px"></div>
         </div>
 
-        <div class="card card--leaf" data-anim style="--i:3">
-          <p class="card__title">Kernel sold abroad · thousand tonnes</p>
-          <div data-chart="compareBars" data-spec="soldAbroad" style="height:min(150px,19vh)"></div>
-          <p class="dek" style="margin-top:.5rem"><strong>Vietnam sells 21× more.</strong></p>
-        </div>
-      </div>
+        <div class="stack">
+          <div class="card card--accent card--grow" data-anim style="--i:3">
+            <p class="card__title">Grown at home · thousand tonnes</p>
+            <div class="chart-fill" data-chart="compareBars" data-spec="grownAtHome" style="min-height:96px"></div>
+            <p class="dek" style="margin-top:.4rem"><strong>India grows more.</strong></p>
+          </div>
 
-      <div class="cols cols--3">
-        <div class="card" data-anim style="--i:4">
-          <div class="stat">
-            <div class="stat__value stat__value--terracotta">9<span class="stat__unit">%</span></div>
-            <div class="stat__label">of India's cashew is sold abroad</div>
-          </div>
-        </div>
-        <div class="card" data-anim style="--i:5">
-          <div class="stat">
-            <div class="stat__value stat__value--leaf">350,000<span class="stat__unit">tonnes</span></div>
-            <div class="stat__label">eaten inside India — the world's biggest market</div>
-          </div>
-        </div>
-        <div class="card" data-anim style="--i:6">
-          <div class="stat">
-            <div class="stat__value stat__value--gold">27<span class="stat__unit">%</span></div>
-            <div class="stat__label">India's kernel costs more — and the gap is growing</div>
+          <div class="card card--leaf card--grow" data-anim style="--i:4">
+            <p class="card__title">Kernel sold abroad · thousand tonnes</p>
+            <div class="chart-fill" data-chart="compareBars" data-spec="soldAbroad" style="min-height:96px"></div>
+            <p class="dek" style="margin-top:.4rem"><strong>Vietnam sells 21× more.</strong></p>
           </div>
         </div>
       </div>
 
-      <p class="srcline" data-anim style="--i:7"><span class="srcline__label">Resourced from</span>Vietnam Customs · VINACAS · India's DCCD and CEPCI · ICRIER. Two scales on purpose — kernel is only ~22% of raw nut weight.</p>
+      <p class="srcline" data-anim style="--i:5"><span class="srcline__label">Resourced from</span>Vietnam Customs · VINACAS · India's DCCD and CEPCI · ICRIER. The two small charts use separate scales on purpose — kernel is only ~22% of raw nut weight.</p>
     </div>
   </section>
 
@@ -446,27 +432,28 @@
       <div class="cols cols--3">
         <div class="card card--accent" data-anim style="--i:2">
           <p class="card__title">01 · El Niño — on Cambodia</p>
-          <p class="dek">Cambodia is now <strong>a million tonnes</strong> and over half of Vietnam's raw material. Bad weather there now hits Vietnamese factories directly.</p>
-          <p class="fine" style="margin-top:.8rem">The last two El Niño events barely touched cashew. Real risk, arguable size.</p>
+          <p class="dek">Bad weather in Cambodia now hits Vietnamese factories directly.</p>
+          <div style="margin-top:auto">
+            <p class="fine" style="margin-bottom:.4rem">Share of Vietnam's raw nuts</p>
+            <div data-chart="shareBar" data-spec="cambodiaShare" style="height:min(74px,9vh)"></div>
+          </div>
         </div>
 
         <div class="card card--accent" data-anim style="--i:3">
           <p class="card__title">02 · Factories closing</p>
-          <ul class="bullets" style="gap:.5rem">
-            <li>Palasa — <strong>300 units stopped</strong></li>
-            <li>Andhra at <strong>half capacity</strong></li>
-            <li>Kerala <strong>830 → ~100</strong> factories</li>
-            <li>Workers <strong>300,000 → 100,000</strong></li>
-          </ul>
+          <p class="dek">Kerala's shelling base: <strong>830 → about 100</strong>.</p>
+          <div style="margin-top:auto">
+            <div data-chart="pictogram" data-spec="keralaFactories" style="height:min(96px,12vh)"></div>
+          </div>
         </div>
 
         <div class="card card--accent" data-anim style="--i:4">
           <p class="card__title">03 · Governments changing rules</p>
-          <p class="dek"><strong>None of it changed how much cashew exists. All of it changed who could buy it.</strong></p>
-          <ul class="bullets" style="margin-top:.7rem;gap:.5rem">
-            <li>Togo <strong>−84%</strong> · Côte d'Ivoire <strong>−55%</strong></li>
-            <li>Tanzania <strong>→ #1</strong> · Mozambique <strong>doubled</strong></li>
-          </ul>
+          <p class="dek">Nothing changed how much cashew <em>exists</em> — only <strong>who could buy it</strong>.</p>
+          <div style="margin-top:auto">
+            <p class="fine" style="margin-bottom:.3rem">India's buying, % change in one season</p>
+            <div data-chart="deltaBars" data-spec="indiaSources" style="height:min(104px,13vh)"></div>
+          </div>
         </div>
       </div>
 

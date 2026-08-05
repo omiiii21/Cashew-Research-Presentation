@@ -121,6 +121,68 @@ window.CHARTS = (function () {
     },
 
     /* --------------------------------------------------------
+       Slide 6 — where the world's raw nuts travel.
+       Everything here is RAW NUTS in million tonnes, one unit
+       throughout, so node sizes and arc widths are comparable.
+       Kernel is a different quantity and stays on its own chart.
+       -------------------------------------------------------- */
+    nutRoutes: {
+      leftTitle: 'GROWN HERE',
+      rightTitle: 'SHELLED HERE',
+      left: [
+        { label: 'West Africa',   sub: '2.95', value: 295, stroke: '#C05F3C' },
+        { label: 'Cambodia',      sub: '0.96', value: 96,  stroke: '#D9A441' },
+        { label: 'East Africa',   sub: '0.80', value: 80,  stroke: '#7A5638' },
+        { label: "India's crop",  sub: '0.79', value: 79,  stroke: '#5B7C8D' },
+        { label: "Vietnam's crop",sub: '0.32', value: 40,  stroke: '#8C5A6E' }
+      ],
+      right: [
+        { label: 'VIETNAM', sub: 'shells 3.3', value: 330, fill: '#4A3428', stroke: '#4A3428', textFill: '#F7F1E4', subFill: 'rgba(247,241,228,.75)' },
+        { label: 'INDIA',   sub: 'shells 2.0', value: 200, fill: '#C05F3C', stroke: '#C05F3C', textFill: '#FFFFFF', subFill: 'rgba(255,255,255,.85)' },
+        { label: 'IN AFRICA', sub: 'shells 0.9', value: 90, fill: '#55703F', stroke: '#55703F', textFill: '#FFFFFF', subFill: 'rgba(255,255,255,.85)' }
+      ],
+      links: [
+        { from: 'L0', to: 'R0', weight: 13, color: '#C05F3C' },
+        { from: 'L0', to: 'R1', weight: 7,  color: '#C05F3C' },
+        { from: 'L0', to: 'R2', weight: 8,  color: '#55703F' },
+        { from: 'L1', to: 'R0', weight: 12, color: '#D9A441' },
+        { from: 'L2', to: 'R1', weight: 7,  color: '#7A5638' },
+        { from: 'L2', to: 'R0', weight: 4,  color: '#7A5638' },
+        { from: 'L3', to: 'R1', weight: 8,  color: '#5B7C8D' },
+        { from: 'L4', to: 'R0', weight: 4,  color: '#8C5A6E' }
+      ]
+    },
+
+    /* --------------------------------------------------------
+       Slide 9 — a visual for each of the three risks.
+       -------------------------------------------------------- */
+
+    /* 01 — how much of Vietnam's raw material is Cambodian */
+    cambodiaShare: {
+      parts: [
+        { label: 'Cambodia', value: 55, color: '#D9A441' },
+        { label: 'Everywhere else', value: 45, color: '#C9BBA2' }
+      ]
+    },
+
+    /* 02 — Kerala's shelling base, one square per 10 factories */
+    keralaFactories: {
+      units: 83,
+      filled: 10,
+      cols: 21,
+      caption: 'each square = 10 factories'
+    },
+
+    /* 03 — India's buying rewritten in one season (% change) */
+    indiaSources: {
+      items: [
+        { label: 'Mozambique',    value:  95 },
+        { label: "Côte d'Ivoire", value: -55 },
+        { label: 'Togo',          value: -84 }
+      ]
+    },
+
+    /* --------------------------------------------------------
        Slide 8 — kernel WW320 FOB, USD/lb, now vs a year ago
        India has been FROZEN at 3.98 for a full year while
        Vietnam eased. The competitiveness gap is widening.

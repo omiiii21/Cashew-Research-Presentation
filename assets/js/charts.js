@@ -336,7 +336,7 @@
     var f = frame(host, null), svg = f.svg, W = f.w, H = f.h;
     var F = fonts();
 
-    var maxAbs = niceMax(Math.max.apply(null, items.map(function (d) { return Math.abs(d.value); })) * 1.12);
+    var maxAbs = niceMax(Math.max.apply(null, items.map(function (d) { return Math.abs(d.value); })) * 1.02);
 
     /* Measure the widest category label and the widest value label. A fully
        negative bar puts its value label to the LEFT of the plot area, so the
@@ -386,6 +386,127 @@
         (pos ? '+' : '') + fmt(d.value, 1) + '%', 'value-label',
         { 'text-anchor': pos ? 'start' : 'end', fill: pos ? '#3F5730' : '#8A3319', 'font-size': FS.val });
       reveal(lbl, { opacity: 0 }, { opacity: 1 }, 480, 620 + i * 50);
+    });
+  }
+
+  /* ============================================================
+     Pictogram — an icon array. Far more visceral than a bar for
+     "almost all of these are gone": you see the survivors.
+     spec: { units, filled, cols, caption }
+     ============================================================ */
+  function pictogram(host, spec) {
+    var f = frame(host, 3), svg = f.svg, W = f.w, H = f.h;
+    var cols = spec.cols || 20;
+    var rows = Math.ceil(spec.units / cols);
+    var capH = spec.caption ? 18 : 0;
+    var gap = 3;
+    var cell = Math.max(4, Math.min((W - (cols - 1) * gap) / cols, (H - capH - (rows - 1) * gap) / rows));
+    var gridW = cols * cell + (cols - 1) * gap;
+    var x0 = (W - gridW) / 2;
+    var y0 = 2;
+
+    for (var i = 0; i < spec.units; i++) {
+      var r = Math.floor(i / cols), c = i % cols;
+      var on = i < spec.filled;
+      var sq = el('rect', {
+        x: x0 + c * (cell + gap), y: y0 + r * (cell + gap),
+        width: cell, height: cell, rx: Math.min(2, cell * 0.25),
+        fill: on ? C.laterite : C.edge,
+        opacity: on ? 1 : .75
+      }, svg);
+      reveal(sq, { opacity: 0 }, { opacity: on ? 1 : .75 }, 320, 40 + i * 7);
+    }
+
+    if (spec.caption) {
+      text(svg, W / 2, y0 + rows * (cell + gap) + 13, spec.caption, 'axis-label',
+        { 'text-anchor': 'middle', 'font-size': 11.5 });
+    }
+  }
+
+  /* ============================================================
+     Trade-flow diagram — where the world's raw nuts travel.
+     RAW NUTS ONLY, one unit throughout (million tonnes). The
+     earlier version put raw nuts and kernel in the same picture,
+     which implied a comparability that does not exist — kernel is
+     only ~22% of raw-nut weight. Two columns, not three, so the
+     arcs stay readable.
+     spec: { left:[...], right:[...], links:[{from,to,weight}] }
+     ============================================================ */
+  function tradeFlow(host, spec) {
+    var f = frame(host, 1.5), svg = f.svg, W = f.w, H = f.h;
+    if (W < 200 || H < 140) return;
+
+    var colX = [W * 0.17, W * 0.83];
+    var pad = 34;
+    var nodeW = Math.min(180, W * 0.30);
+
+    function layout(list, x) {
+      var total = list.reduce(function (s, d) { return s + d.value; }, 0);
+      var gap = 14;
+      var avail = H - pad * 2 - (list.length - 1) * gap;
+      var y = pad, out = [];
+      list.forEach(function (d) {
+        var h = Math.max(30, (d.value / total) * avail);
+        out.push({ d: d, x: x, y: y + h / 2, h: h });
+        y += h + gap;
+      });
+      var used = y - gap - pad;
+      var shift = (H - pad * 2 - used) / 2;
+      out.forEach(function (o) { o.y += shift; });
+      return out;
+    }
+
+    var L = layout(spec.left, colX[0]);
+    var R = layout(spec.right, colX[1]);
+
+    var gLinks = el('g', {}, svg);
+    var gNodes = el('g', {}, svg);
+    var canPulse = window.CSS && CSS.supports && CSS.supports('offset-path', 'path("M0,0 L1,1")');
+
+    (spec.links || []).forEach(function (lk, i) {
+      var a = L[+lk.from.slice(1)], b = R[+lk.to.slice(1)];
+      if (!a || !b) return;
+      var x1 = a.x + nodeW / 2, x2 = b.x - nodeW / 2;
+      var cx = (x1 + x2) / 2;
+      var d = 'M' + x1 + ',' + a.y + ' C' + cx + ',' + a.y + ' ' + cx + ',' + b.y + ' ' + x2 + ',' + b.y;
+      var p = el('path', { d: d, class: 'flow__arc', stroke: lk.color || C.gold,
+                           'stroke-width': Math.max(3, lk.weight), fill: 'none' }, gLinks);
+      var len = p.getTotalLength ? p.getTotalLength() : 600;
+      p.style.strokeDasharray = len;
+      reveal(p, { strokeDashoffset: len, opacity: 0 }, { strokeDashoffset: 0, opacity: .45 }, 1100, 260 + i * 80);
+
+      if (canPulse && !REDUCE) {
+        var dot = el('circle', { r: Math.max(3, lk.weight * 0.3), fill: lk.color || C.gold, class: 'flow__pulse' }, gLinks);
+        dot.style.offsetPath = 'path("' + d + '")';
+        dot.style.animationDelay = (i * 0.5) + 's';
+        dot.style.animationDuration = (3 + (i % 3) * 0.45) + 's';
+      }
+    });
+
+    function nodes(list) {
+      list.forEach(function (o, i) {
+        var g = el('g', { class: 'flow__node' }, gNodes);
+        var h = Math.max(34, o.h), x = o.x - nodeW / 2;
+        el('rect', { x: x, y: o.y - h / 2, width: nodeW, height: h, rx: 9,
+                     fill: o.d.fill || C.paper, stroke: o.d.stroke || C.edge, 'stroke-width': 2 }, g);
+        text(g, o.x, o.y - 3, o.d.label, '',
+          { 'text-anchor': 'middle', fill: o.d.textFill || C.ink, 'font-size': 14, 'font-weight': 650 });
+        text(g, o.x, o.y + 15, o.d.sub, '',
+          { 'text-anchor': 'middle', fill: o.d.subFill || C.inkFaint, 'font-size': 12.5, 'font-weight': 500 });
+        reveal(g, { opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'translateY(0)' }, 620, 90 + i * 80);
+      });
+    }
+    nodes(L); nodes(R);
+
+    /* Column headings are centred on their column, but a heading wider than
+       the column would hang off the edge of the chart — clamp it back in. */
+    [spec.leftTitle, spec.rightTitle].forEach(function (t, i) {
+      if (!t) return;
+      var tw = measure(t, FS.axis, 600, fonts().sans);
+      var x = Math.max(tw / 2 + 4, Math.min(colX[i], W - tw / 2 - 4));
+      var h = text(svg, x, 17, t, 'axis-label',
+        { 'text-anchor': 'middle', fill: C.inkFaint, 'font-size': FS.axis });
+      reveal(h, { opacity: 0 }, { opacity: 1 }, 500, 60);
     });
   }
 
@@ -513,6 +634,8 @@
   var REGISTRY = {
     trendLine: trendLine,
     compareBars: compareBars,
+    tradeFlow: tradeFlow,
+    pictogram: pictogram,
     deltaBars: deltaBars,
     priceLines: priceLines,
     shareBar: shareBar
