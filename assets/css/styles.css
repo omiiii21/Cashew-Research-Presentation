@@ -718,16 +718,16 @@ tr.is-total td {
 
 .contact { justify-content: center; background: radial-gradient(ellipse 70% 70% at 50% 40%, rgba(217,164,65,.14), transparent 62%), var(--cream); }
 
-.contact__grid { display: grid; grid-template-columns: 1fr auto; gap: clamp(1.5rem, 4vw, 4.5rem); align-items: center; }
+.contact__grid { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: clamp(1.2rem, 3vw, 3.4rem); align-items: center; }
 
 .card-img {
-  max-width: min(38vw, 460px);
+  max-width: min(50vw, 700px);
   width: 100%;
   height: auto;
   border-radius: 12px;
   border: 1px solid var(--paper-edge);
   box-shadow: 0 3px 8px rgba(42,31,22,.08), 0 26px 60px -28px rgba(42,31,22,.5);
-  transform: rotate(-1.4deg);
+  transform: rotate(-1deg);
   transition: transform .45s cubic-bezier(.22,.68,.32,1), box-shadow .45s ease;
   display: block;
 }
@@ -736,8 +736,8 @@ tr.is-total td {
 
 /* Shown until a real card image is dropped in */
 .card-placeholder {
-  width: min(38vw, 440px);
-  aspect-ratio: 1.75 / 1;
+  width: min(50vw, 660px);
+  aspect-ratio: 1.69 / 1;
   border: 2px dashed var(--paper-edge);
   border-radius: 12px;
   display: grid;
