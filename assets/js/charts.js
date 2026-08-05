@@ -8,6 +8,12 @@
 
   var NS = 'http://www.w3.org/2000/svg';
 
+  /* Chart type sizes live HERE, not in the stylesheet. Measurement and
+     rendering must use the same numbers — when they drifted apart (measured
+     at 11.5px, rendered at 13.5px) every label overflowed its gutter. These
+     are applied inline so no CSS rule can silently override them. */
+  var FS = { cat: 13.5, val: 13, note: 12.5, axis: 12.5 };
+
   /* ---------- palette pulled from the CSS custom properties ---------- */
   function cssVar(name, fallback) {
     var v = getComputedStyle(document.documentElement).getPropertyValue(name);
@@ -57,6 +63,7 @@
        colour we set here. Promote it to an inline style so it actually wins. */
     if (attrs.fill) t.style.fill = attrs.fill;
     if (attrs['font-weight']) t.style.fontWeight = attrs['font-weight'];
+    if (attrs['font-size']) t.style.fontSize = attrs['font-size'] + 'px';
     t.textContent = str;
     return t;
   }
@@ -248,15 +255,16 @@
     /* Measure the three text gutters so nothing can collide or clip. */
     var labelW = 0, noteW = 0, valW = 0;
     items.forEach(function (d) {
-      labelW = Math.max(labelW, measure(d.label, 11.5, 520, F.sans));
-      noteW = Math.max(noteW, measure(d.note, 10.5, 640, F.mono));
-      valW = Math.max(valW, measure(fmt(d.a, dp), 11, 640, F.mono));
+      labelW = Math.max(labelW, measure(d.label, FS.cat, 520, F.sans));
+      noteW = Math.max(noteW, measure(d.note, FS.note, 640, F.mono));
+      valW = Math.max(valW, measure(fmt(d.a, dp), FS.val, 640, F.mono));
     });
     labelW = Math.min(labelW, W * 0.34);
     noteW = Math.min(noteW, W * 0.30);
 
     var m = {
-      t: 14, b: 20,
+      t: 14,
+      b: spec.axis ? 30 : 20,
       l: labelW + 20,
       r: noteW ? noteW + 20 : 12
     };
@@ -267,22 +275,30 @@
     var maxV = niceMax(Math.max.apply(null, items.map(function (d) { return Math.max(d.a || 0, d.b || 0); })));
     var X = function (v) { return (v / maxV) * iw; };
     var band = (H - m.t - m.b) / items.length;
-    var bh = Math.min(11, band * 0.30);
+    /* One bar per row reads far better than a pair of near-identical bars.
+       Use it whenever there is no prior-year series to compare against. */
+    var single = !!spec.single;
+    var bh = single ? Math.min(22, band * 0.62) : Math.min(11, band * 0.30);
 
     /* vertical gridlines — confined to the plot area, never under the notes */
     var g = el('g', { class: 'grid' }, svg);
     for (var i = 0; i <= 4; i++) {
       var gx = m.l + (iw / 4) * i;
       el('line', { x1: gx, x2: gx, y1: m.t - 4, y2: H - m.b, stroke: C.edge }, g);
+      if (spec.axis) {
+        text(g, gx, H - m.b + 19, fmt((maxV / 4) * i, spec.axisDp === undefined ? 0 : spec.axisDp),
+          'axis-label', { 'text-anchor': i === 0 ? 'start' : (i === 4 ? 'end' : 'middle'), 'font-size': FS.axis });
+      }
     }
 
     items.forEach(function (d, i) {
       var cy = m.t + band * i + band / 2;
 
-      text(svg, m.l - 12, cy + 4, d.label, 'cat-label', { 'text-anchor': 'end', fill: C.ink });
+      text(svg, m.l - 12, cy + 4.5, d.label, 'cat-label',
+        { 'text-anchor': 'end', fill: C.ink, 'font-size': FS.cat });
 
       /* prior year — muted, sits behind */
-      if (d.b !== null && d.b !== undefined) {
+      if (!single && d.b !== null && d.b !== undefined) {
         var rb = el('rect', {
           x: m.l, y: cy - bh - 1.5, width: Math.max(2, X(d.b)), height: bh,
           rx: 3, fill: C.inkFaint, opacity: .42
@@ -293,19 +309,19 @@
 
       /* current year */
       var ra = el('rect', {
-        x: m.l, y: cy + 1.5, width: Math.max(2, X(d.a)), height: bh,
+        x: m.l, y: single ? cy - bh / 2 : cy + 1.5, width: Math.max(2, X(d.a)), height: bh,
         rx: 3, fill: d.color || C.terracotta
       }, svg);
       reveal(ra, { transform: 'scaleX(0)', transformOrigin: m.l + 'px ' + cy + 'px' },
                  { transform: 'scaleX(1)' }, 900, 160 + i * 45);
 
       var lbl = text(svg, m.l + Math.max(2, X(d.a)) + 9, cy + 4.5,
-        fmt(d.a, dp), 'value-label', { 'text-anchor': 'start' });
+        fmt(d.a, dp), 'value-label', { 'text-anchor': 'start', 'font-size': FS.val });
       reveal(lbl, { opacity: 0 }, { opacity: 1 }, 500, 600 + i * 45);
 
       if (d.note) {
         var nt = text(svg, W - 8, cy + 4.5, d.note, 'value-label',
-          { 'text-anchor': 'end', fill: d.noteColor || C.inkFaint, 'font-size': 10.5 });
+          { 'text-anchor': 'end', fill: d.noteColor || C.inkFaint, 'font-size': FS.note });
         reveal(nt, { opacity: 0 }, { opacity: 1 }, 500, 700 + i * 45);
       }
     });
@@ -327,8 +343,8 @@
        plot has to start clear of both — otherwise the text runs off the SVG. */
     var labelW = 0, valW = 0;
     items.forEach(function (d) {
-      labelW = Math.max(labelW, measure(d.label, 11.5, 520, F.sans));
-      valW = Math.max(valW, measure((d.value >= 0 ? '+' : '') + fmt(d.value, 1) + '%', 11, 640, F.mono));
+      labelW = Math.max(labelW, measure(d.label, FS.cat, 520, F.sans));
+      valW = Math.max(valW, measure((d.value >= 0 ? '+' : '') + fmt(d.value, 1) + '%', FS.val, 640, F.mono));
     });
     labelW = Math.min(labelW, W * 0.36);
 
@@ -347,7 +363,8 @@
     [-1, -0.5, 0, 0.5, 1].forEach(function (t) {
       var gx = mid + (iw / 2) * t;
       el('line', { x1: gx, x2: gx, y1: m.t - 8, y2: H - m.b, stroke: t === 0 ? C.inkFaint : C.edge, 'stroke-width': t === 0 ? 1.4 : 1 }, g);
-      text(g, gx, m.t - 13, (t > 0 ? '+' : '') + fmt(maxAbs * t, 0) + '%', 'axis-label', { 'text-anchor': 'middle' });
+      text(g, gx, m.t - 14, (t > 0 ? '+' : '') + fmt(maxAbs * t, 0) + '%', 'axis-label',
+        { 'text-anchor': 'middle', 'font-size': FS.axis });
     });
 
     items.forEach(function (d, i) {
@@ -355,7 +372,8 @@
       var pos = d.value >= 0;
       var w = Math.abs(X(d.value));
 
-      text(svg, catX, cy + 4, d.label, 'cat-label', { 'text-anchor': 'end', fill: C.ink });
+      text(svg, catX, cy + 4.5, d.label, 'cat-label',
+        { 'text-anchor': 'end', fill: C.ink, 'font-size': FS.cat });
 
       var r = el('rect', {
         x: pos ? mid : mid - w, y: cy - bh / 2, width: Math.max(1.5, w), height: bh,
@@ -364,104 +382,10 @@
       reveal(r, { transform: 'scaleX(0)', transformOrigin: mid + 'px ' + cy + 'px' },
                 { transform: 'scaleX(1)' }, 880, 120 + i * 50);
 
-      var lbl = text(svg, pos ? mid + w + 8 : mid - w - 8, cy + 4,
+      var lbl = text(svg, pos ? mid + w + 8 : mid - w - 8, cy + 4.5,
         (pos ? '+' : '') + fmt(d.value, 1) + '%', 'value-label',
-        { 'text-anchor': pos ? 'start' : 'end', fill: pos ? '#3F5730' : '#8A3319' });
+        { 'text-anchor': pos ? 'start' : 'end', fill: pos ? '#3F5730' : '#8A3319', 'font-size': FS.val });
       reveal(lbl, { opacity: 0 }, { opacity: 1 }, 480, 620 + i * 50);
-    });
-  }
-
-  /* ============================================================
-     4. Trade-flow diagram — origins → processors → markets
-     This is the visual argument for "size versus export".
-     spec: { left:[{label,value,sub}], mid:[...], right:[...] }
-     ============================================================ */
-  function tradeFlow(host, spec) {
-    var f = frame(host, 1.85), svg = f.svg, W = f.w, H = f.h;
-    if (W < 200 || H < 160) return;
-
-    var colX = [W * 0.13, W * 0.5, W * 0.87];
-    var pad = 30;
-
-    function layout(list, x) {
-      var total = list.reduce(function (s, d) { return s + d.value; }, 0);
-      var avail = H - pad * 2 - (list.length - 1) * 16;
-      var y = pad, out = [];
-      list.forEach(function (d) {
-        var h = Math.max(22, (d.value / total) * avail);
-        out.push({ d: d, x: x, y: y + h / 2, h: h });
-        y += h + 16;
-      });
-      /* centre the stack vertically */
-      var used = y - 16 - pad;
-      var shift = (H - pad * 2 - used) / 2;
-      out.forEach(function (o) { o.y += shift; });
-      return out;
-    }
-
-    var L = layout(spec.left, colX[0]);
-    var M = layout(spec.mid, colX[1]);
-    var R = layout(spec.right, colX[2]);
-
-    var gLinks = el('g', {}, svg);
-    var gNodes = el('g', {}, svg);
-
-    function arc(a, b, weight, color, idx) {
-      var x1 = a.x + 46, x2 = b.x - 46;
-      var cx = (x1 + x2) / 2;
-      var d = 'M' + x1 + ',' + a.y + ' C' + cx + ',' + a.y + ' ' + cx + ',' + b.y + ' ' + x2 + ',' + b.y;
-      var p = el('path', {
-        d: d, class: 'flow__arc', stroke: color,
-        'stroke-width': Math.max(2, weight), fill: 'none'
-      }, gLinks);
-      var len = p.getTotalLength ? p.getTotalLength() : 600;
-      p.style.strokeDasharray = len;
-      reveal(p, { strokeDashoffset: len, opacity: 0 }, { strokeDashoffset: 0, opacity: .42 }, 1100, 240 + idx * 70);
-
-      /* Travelling pulse — the "moving animation" that shows direction.
-         offset-path is well supported but not universal; where it is
-         missing we simply skip the pulse rather than parking a dot at 0,0. */
-      if (window.CSS && CSS.supports && CSS.supports('offset-path', 'path("M0,0 L1,1")')) {
-        var dot = el('circle', { r: Math.max(2.6, weight * 0.28), fill: color, class: 'flow__pulse' }, gLinks);
-        dot.style.offsetPath = 'path("' + d + '")';
-        dot.style.animationDelay = (idx * 0.55) + 's';
-        dot.style.animationDuration = (2.9 + (idx % 3) * 0.4) + 's';
-      }
-      return p;
-    }
-
-    (spec.links || []).forEach(function (lk, i) {
-      var from = lk.from[0] === 'L' ? L[+lk.from.slice(1)] : M[+lk.from.slice(1)];
-      var to = lk.to[0] === 'M' ? M[+lk.to.slice(1)] : R[+lk.to.slice(1)];
-      if (from && to) arc(from, to, lk.weight, lk.color || C.gold, i);
-    });
-
-    function nodes(list) {
-      list.forEach(function (o, i) {
-        var g = el('g', { class: 'flow__node' }, gNodes);
-        var w = Math.min(160, W * 0.23), h = Math.max(30, o.h);
-        var x = o.x - w / 2;
-        el('rect', {
-          x: x, y: o.y - h / 2, width: w, height: h, rx: 8,
-          fill: o.d.fill || C.paper, stroke: o.d.stroke || C.edge, 'stroke-width': 1.5
-        }, g);
-        text(g, o.x, o.y - (o.d.sub ? 5 : -4), o.d.label, '',
-          { 'text-anchor': 'middle', fill: o.d.textFill || C.ink, 'font-size': Math.min(13, Math.max(10, h * 0.3)), 'font-weight': 620 });
-        if (o.d.sub) {
-          text(g, o.x, o.y + 12, o.d.sub, 'flow__sub',
-            { 'text-anchor': 'middle', fill: o.d.subFill || C.inkFaint, 'font-size': 10.5 });
-        }
-        reveal(g, { opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'translateY(0)' }, 620, 100 + i * 80);
-      });
-    }
-
-    nodes(L); nodes(M); nodes(R);
-
-    /* column headings */
-    [spec.leftTitle, spec.midTitle, spec.rightTitle].forEach(function (t, i) {
-      if (!t) return;
-      var h = text(svg, colX[i], 16, t, 'axis-label', { 'text-anchor': 'middle', fill: C.inkFaint });
-      reveal(h, { opacity: 0 }, { opacity: 1 }, 500, 60);
     });
   }
 
@@ -590,7 +514,6 @@
     trendLine: trendLine,
     compareBars: compareBars,
     deltaBars: deltaBars,
-    tradeFlow: tradeFlow,
     priceLines: priceLines,
     shareBar: shareBar
   };

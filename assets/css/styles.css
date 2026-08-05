@@ -157,7 +157,7 @@ body::before {
 @media (prefers-reduced-motion: reduce) {
   .slide, [data-anim] { transition: none !important; animation: none !important; }
   [data-anim] { opacity: 1 !important; transform: none !important; }
-  .flow__pulse, .kernel__drift, .pip { animation: none !important; }
+  .kernel__drift, .pip { animation: none !important; }
 }
 
 /* ============================================================
@@ -166,9 +166,9 @@ body::before {
 
 .eyebrow {
   font-family: var(--sans);
-  font-size: clamp(.68rem, .82vw, .84rem);
+  font-size: clamp(.76rem, min(.95vw, 1.55vh), .95rem);
   font-weight: 650;
-  letter-spacing: .17em;
+  letter-spacing: .15em;
   text-transform: uppercase;
   color: var(--terracotta);
   display: flex;
@@ -193,7 +193,7 @@ h1 {
 }
 
 h2 {
-  font-size: clamp(1.55rem, min(3.5vw, 5.6vh), 3.05rem);
+  font-size: clamp(1.9rem, min(4.3vw, 6.8vh), 3.7rem);
   line-height: 1.08;
   letter-spacing: -.018em;
   margin-bottom: .5rem;
@@ -206,23 +206,23 @@ h3 {
 }
 
 .lede {
-  font-size: clamp(.92rem, min(1.42vw, 2.35vh), 1.32rem);
-  line-height: 1.5;
+  font-size: clamp(1.05rem, min(1.7vw, 2.8vh), 1.6rem);
+  line-height: 1.45;
   color: var(--ink-soft);
   max-width: 62ch;
   margin: 0;
 }
 
 .dek {
-  font-size: clamp(.8rem, min(1.05vw, 1.75vh), 1.02rem);
-  line-height: 1.55;
+  font-size: clamp(.95rem, min(1.32vw, 2.15vh), 1.24rem);
+  line-height: 1.5;
   color: var(--ink-soft);
   max-width: 74ch;
   margin: 0;
 }
 
 .fine {
-  font-size: clamp(.66rem, .78vw, .78rem);
+  font-size: clamp(.76rem, min(.95vw, 1.55vh), .93rem);
   line-height: 1.45;
   color: var(--ink-faint);
   margin: 0;
@@ -369,9 +369,9 @@ strong, b { font-weight: 640; color: var(--ink); }
 
 .card__title {
   font-family: var(--sans);
-  font-size: clamp(.66rem, .78vw, .77rem);
+  font-size: clamp(.74rem, min(.9vw, 1.5vh), .9rem);
   font-weight: 680;
-  letter-spacing: .14em;
+  letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--ink-faint);
   margin: 0 0 .7rem;
@@ -385,7 +385,7 @@ strong, b { font-weight: 640; color: var(--ink); }
 
 .stat__value {
   font-family: var(--display);
-  font-size: clamp(1.7rem, min(4vw, 6.4vh), 3.4rem);
+  font-size: clamp(2.3rem, min(5.4vw, 8.8vh), 4.8rem);
   font-weight: 600;
   line-height: .96;
   letter-spacing: -.03em;
@@ -407,9 +407,9 @@ strong, b { font-weight: 640; color: var(--ink); }
 }
 
 .stat__label {
-  font-size: clamp(.68rem, min(.88vw, 1.45vh), .85rem);
+  font-size: clamp(.86rem, min(1.15vw, 1.9vh), 1.1rem);
   color: var(--ink-soft);
-  line-height: 1.35;
+  line-height: 1.4;
 }
 
 .stat__foot { font-size: clamp(.66rem, .76vw, .74rem); color: var(--ink-faint); line-height: 1.4; }
@@ -422,7 +422,7 @@ strong, b { font-weight: 640; color: var(--ink); }
   padding: .16rem .5rem;
   border-radius: 999px;
   font-family: var(--mono);
-  font-size: clamp(.66rem, .8vw, .78rem);
+  font-size: clamp(.76rem, min(.95vw, 1.55vh), .92rem);
   font-weight: 600;
   letter-spacing: -.01em;
   white-space: nowrap;
@@ -444,15 +444,15 @@ strong, b { font-weight: 640; color: var(--ink); }
   min-height: 0;
 }
 
-table { border-collapse: collapse; width: 100%; font-size: clamp(.66rem, min(.92vw, 1.5vh), .89rem); }
+table { border-collapse: collapse; width: 100%; font-size: clamp(.8rem, min(1.1vw, 1.8vh), 1.06rem); }
 
 thead th {
   position: sticky;
   top: 0;
   background: var(--cream-2);
-  font-size: clamp(.6rem, .72vw, .7rem);
+  font-size: clamp(.68rem, min(.82vw, 1.35vh), .82rem);
   font-weight: 680;
-  letter-spacing: .09em;
+  letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--ink-soft);
   text-align: left;
@@ -520,12 +520,12 @@ tr.is-total td {
 .chart text {
   font-family: var(--sans);
   fill: var(--ink-soft);
-  font-size: 11.5px;
+  font-size: 13.5px;
 }
 
-.chart .axis-label { fill: var(--ink-faint); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; }
-.chart .value-label { fill: var(--ink); font-weight: 640; font-family: var(--mono); font-size: 11px; }
-.chart .cat-label { fill: var(--ink); font-size: 11.5px; font-weight: 520; }
+.chart .axis-label { fill: var(--ink-faint); font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; }
+.chart .value-label { fill: var(--ink); font-weight: 640; font-family: var(--mono); font-size: 13px; }
+.chart .cat-label { fill: var(--ink); font-size: 13.5px; font-weight: 520; }
 .chart .grid line { stroke: var(--paper-edge); stroke-width: 1; }
 .chart .grid .zero { stroke: var(--ink-faint); stroke-width: 1.4; }
 .chart .axis line, .chart .axis path { stroke: var(--paper-edge); }
@@ -559,30 +559,6 @@ tr.is-total td {
 .legend__swatch--line { height: 3px; border-radius: 2px; width: 16px; }
 
 /* ============================================================
-   Trade-flow diagram (slide: size vs export)
-   ============================================================ */
-
-.flow__arc { fill: none; stroke-linecap: round; opacity: .5; }
-
-.flow__pulse {
-  fill: var(--gold);
-  opacity: .95;
-  animation: pulseAlong 3.4s linear infinite;
-  offset-rotate: 0deg;
-}
-
-@keyframes pulseAlong {
-  from { offset-distance: 0%;   opacity: 0; }
-  12%  { opacity: .95; }
-  88%  { opacity: .95; }
-  to   { offset-distance: 100%; opacity: 0; }
-}
-
-.flow__node circle { stroke: var(--paper); stroke-width: 2.5; }
-.flow__node text { font-weight: 600; fill: var(--ink); }
-.flow__node .flow__sub { font-weight: 500; fill: var(--ink-faint); font-size: 10.5px; }
-
-/* ============================================================
    Comparison bars — India vs Vietnam
    ============================================================ */
 
@@ -605,9 +581,9 @@ tr.is-total td {
    Quality / KOR lollipops
    ============================================================ */
 
-.kor__row { display: grid; grid-template-columns: 11rem 1fr 4.6rem; gap: .9rem; align-items: center; }
-.kor__name { font-size: clamp(.74rem, .9vw, .88rem); font-weight: 560; }
-.kor__track { position: relative; height: 10px; background: var(--cream-2); border-radius: 999px; }
+.kor__row { display: grid; grid-template-columns: 12.5rem 1fr 5rem; gap: 1rem; align-items: center; }
+.kor__name { font-size: clamp(.88rem, min(1.1vw, 1.8vh), 1.06rem); font-weight: 560; }
+.kor__track { position: relative; height: 13px; background: var(--cream-2); border-radius: 999px; }
 
 .kor__fill {
   position: absolute;
@@ -619,7 +595,7 @@ tr.is-total td {
 }
 
 .is-active .kor__fill { transform: scaleX(1); }
-.kor__val { font-family: var(--mono); font-size: clamp(.72rem, .88vw, .84rem); font-weight: 620; text-align: right; }
+.kor__val { font-family: var(--mono); font-size: clamp(.86rem, min(1.05vw, 1.72vh), 1rem); font-weight: 620; text-align: right; }
 
 /* Band showing the "good" KOR zone */
 .kor__band { position: absolute; top: -5px; bottom: -5px; background: rgba(85,112,63,.14); border-left: 1px dashed var(--leaf); border-right: 1px dashed var(--leaf); }
@@ -633,7 +609,7 @@ tr.is-total td {
 .bullets li {
   position: relative;
   padding-left: 1.65rem;
-  font-size: clamp(.76rem, min(1.02vw, 1.7vh), .99rem);
+  font-size: clamp(.92rem, min(1.25vw, 2.05vh), 1.2rem);
   line-height: 1.5;
   color: var(--ink-soft);
 }
@@ -903,9 +879,9 @@ kbd {
   padding-top: .75rem;
   padding-right: clamp(7rem, 16vw, 15rem);
   padding-left: 0;
-  font-size: clamp(.6rem, .72vw, .7rem);
+  font-size: clamp(.7rem, min(.85vw, 1.4vh), .84rem);
   color: var(--ink-faint);
-  line-height: 1.4;
+  line-height: 1.45;
   border-top: 1px solid rgba(227,214,188,.55);
   flex: 0 0 auto;
 }

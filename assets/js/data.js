@@ -36,25 +36,29 @@ window.CHARTS = (function () {
     },
 
     /* --------------------------------------------------------
-       Slide 3 — country production, 2026 vs 2025 (thousand tonnes)
-       Ghost bar = 2025. Omitted where no 2025 figure exists.
+       Slide 3 — how much each country grew in 2026.
+       ONE bar per country, coloured by region. The year-on-year
+       change lives in its own chart beside this one, so repeating
+       it here as ghost bars and note text only added clutter.
        -------------------------------------------------------- */
     countryProduction: {
       dp: 0,
+      single: true,
+      axis: true,
       items: [
-        { label: "Côte d'Ivoire",  a: 1400, b: 1550, color: DOWN, note: '▼ 6.5–13%', noteColor: DOWN },
-        { label: 'Cambodia',       a:  960, b:  930, color: UP,   note: '▲ ~3%',     noteColor: UP },
-        { label: 'India',          a:  790, b:  802, color: FLAT, note: '≈ flat',    noteColor: FLAT },
-        { label: 'Tanzania',       a:  621, b:  531, color: UP,   note: '▲ 16.9%',   noteColor: UP },
-        { label: 'Nigeria',        a:  375, b:  375, color: FLAT, note: '≈ flat',    noteColor: FLAT },
-        { label: 'Vietnam',        a:  317, b:  309, color: UP,   note: '▲ 4.6%',    noteColor: UP },
-        { label: 'Guinea-Bissau',  a:  300, b: null, color: UP,   note: '▲ up',      noteColor: UP },
-        { label: 'Burkina Faso',   a:  280, b: null, color: FLAT, note: 'no 2025 data',   noteColor: FLAT },
-        { label: 'Ghana',          a:  200, b:  275, color: DOWN, note: '▼ down',noteColor: DOWN },
-        { label: 'Benin',          a:  175, b:  175, color: FLAT, note: '≈ flat',    noteColor: FLAT },
-        { label: 'Guinea',         a:  150, b: null, color: FLAT, note: 'no 2025 data',   noteColor: FLAT },
-        { label: 'Indonesia',      a:  150, b:  150, color: FLAT, note: '≈ flat',    noteColor: FLAT },
-        { label: 'Senegal',        a:   52, b:   52, color: FLAT, note: '≈ flat',    noteColor: FLAT }
+        { label: "Côte d'Ivoire", a: 1400, color: '#C05F3C' },
+        { label: 'Cambodia',      a:  960, color: '#55703F' },
+        { label: 'India',         a:  790, color: '#55703F' },
+        { label: 'Tanzania',      a:  621, color: '#D9A441' },
+        { label: 'Nigeria',       a:  375, color: '#C05F3C' },
+        { label: 'Vietnam',       a:  317, color: '#55703F' },
+        { label: 'Guinea-Bissau', a:  300, color: '#C05F3C' },
+        { label: 'Burkina Faso',  a:  280, color: '#C05F3C' },
+        { label: 'Ghana',         a:  200, color: '#C05F3C' },
+        { label: 'Benin',         a:  175, color: '#C05F3C' },
+        { label: 'Guinea',        a:  150, color: '#C05F3C' },
+        { label: 'Indonesia',     a:  150, color: '#55703F' },
+        { label: 'Senegal',       a:   52, color: '#C05F3C' }
       ]
     },
 
@@ -91,42 +95,28 @@ window.CHARTS = (function () {
     },
 
     /* --------------------------------------------------------
-       Slide 6 — the size-versus-export contrast, as a flow.
-       Weights are proportional to real tonnages, not decorative.
+       Slide 6 — the size-versus-export contrast.
+       Deliberately TWO charts, not one. Raw nuts and kernel are
+       different things (kernel is roughly 22% of raw-nut weight),
+       so putting them on a single scale would be dishonest. Two
+       plain bar charts make the reversal obvious in one glance:
+       India wins the first, Vietnam wins the second by 21x.
        -------------------------------------------------------- */
-    sizeVsExport: {
-      leftTitle: 'RAW NUTS GROWN · MILLION TONNES',
-      midTitle: "WHERE THEY'RE SHELLED",
-      rightTitle: 'KERNEL PRODUCED · THOUSAND TONNES',
-      left: [
-        { label: 'West Africa',  sub: '2.95', value: 295, fill: '#FDFAF3', stroke: '#C05F3C' },
-        { label: 'Cambodia',     sub: '0.96', value: 96,  fill: '#FDFAF3', stroke: '#D9A441' },
-        { label: 'East Africa',  sub: '0.80', value: 80,  fill: '#FDFAF3', stroke: '#7A5638' },
-        { label: 'India crop',   sub: '0.79',  value: 79,  fill: '#FDFAF3', stroke: '#5B7C8D' },
-        { label: 'Vietnam crop', sub: '0.32',  value: 32,  fill: '#FDFAF3', stroke: '#8C5A6E' }
-      ],
-      mid: [
-        { label: 'VIETNAM',  sub: 'buys in 1.81', value: 210, fill: '#4A3428', stroke: '#4A3428', textFill: '#F7F1E4', subFill: 'rgba(247,241,228,.7)' },
-        { label: 'INDIA',    sub: 'buys in 0.58', value: 130, fill: '#C05F3C', stroke: '#C05F3C', textFill: '#FFFFFF', subFill: 'rgba(255,255,255,.8)' },
-        { label: 'IN AFRICA',sub: 'growing fast',  value: 70,  fill: '#55703F', stroke: '#55703F', textFill: '#FFFFFF', subFill: 'rgba(255,255,255,.8)' }
-      ],
-      right: [
-        { label: 'EXPORTED',  sub: 'Vietnam 767 · India 36', value: 200, fill: '#FDFAF3', stroke: '#55703F' },
-        { label: 'INDIA EATS',sub: '350+ eaten in India',      value: 150, fill: '#FDFAF3', stroke: '#C05F3C' }
-      ],
-      links: [
-        { from: 'L0', to: 'M0', weight: 9,  color: '#C05F3C' },
-        { from: 'L0', to: 'M1', weight: 5,  color: '#C05F3C' },
-        { from: 'L0', to: 'M2', weight: 6,  color: '#55703F' },
-        { from: 'L1', to: 'M0', weight: 11, color: '#D9A441' },
-        { from: 'L2', to: 'M1', weight: 6,  color: '#7A5638' },
-        { from: 'L2', to: 'M0', weight: 4,  color: '#7A5638' },
-        { from: 'L3', to: 'M1', weight: 6,  color: '#5B7C8D' },
-        { from: 'L4', to: 'M0', weight: 3,  color: '#8C5A6E' },
-        { from: 'M0', to: 'R0', weight: 13, color: '#55703F' },
-        { from: 'M1', to: 'R1', weight: 10, color: '#C05F3C' },
-        { from: 'M1', to: 'R0', weight: 2,  color: '#55703F' },
-        { from: 'M2', to: 'R0', weight: 4,  color: '#55703F' }
+    grownAtHome: {
+      dp: 0,
+      single: true,
+      items: [
+        { label: 'India',   a: 790, color: '#C05F3C', note: '2.5x more', noteColor: '#8A3319' },
+        { label: 'Vietnam', a: 323, color: '#7A5638' }
+      ]
+    },
+
+    soldAbroad: {
+      dp: 0,
+      single: true,
+      items: [
+        { label: 'India',   a:  36, color: '#C05F3C', note: 'almost none', noteColor: '#8A3319' },
+        { label: 'Vietnam', a: 767, color: '#55703F', note: '21x more', noteColor: '#3F5730' }
       ]
     },
 
