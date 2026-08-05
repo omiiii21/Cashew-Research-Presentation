@@ -662,6 +662,31 @@ tr.is-total td {
 .bullets--leaf li::before { background: var(--leaf); }
 .bullets--gold li::before { background: var(--gold); }
 
+/* Numbered risk headings — these are the titles of the three closing
+   arguments, so they carry more weight than an ordinary card label:
+   larger, bold, full-strength ink, and no all-caps tracking. */
+.risk__head {
+  display: flex;
+  align-items: baseline;
+  gap: .5rem;
+  margin: 0 0 .7rem;
+  font-family: var(--sans);
+  font-size: clamp(1.05rem, min(1.5vw, 2.45vh), 1.5rem);
+  font-weight: 720;
+  line-height: 1.2;
+  letter-spacing: -.012em;
+  color: var(--ink);
+  text-transform: none;
+}
+
+.risk__num {
+  font-family: var(--mono);
+  font-size: .82em;
+  font-weight: 700;
+  color: var(--terracotta);
+  flex: 0 0 auto;
+}
+
 /* Numbered risk list */
 .risks { list-style: none; padding: 0; margin: 0; counter-reset: r; display: flex; flex-direction: column; gap: .8rem; }
 
