@@ -405,6 +405,7 @@ strong, b { font-weight: 640; color: var(--ink); }
   line-height: .96;
   letter-spacing: -.03em;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
   color: var(--ink);
 }
 
@@ -434,8 +435,8 @@ strong, b { font-weight: 640; color: var(--ink); }
 .stat--hero { gap: .55rem; }
 
 .stat--hero .stat__value {
-  font-size: clamp(2.9rem, min(7.4vw, 12.2vh), 7.4rem);
-  line-height: .92;
+  font-size: clamp(2.3rem, min(5.5vw, 8.9vh), 5.5rem);
+  line-height: .95;
 }
 
 .stat--hero .stat__value .stat__unit { font-size: .3em; }
