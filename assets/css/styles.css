@@ -363,6 +363,9 @@ strong, b { font-weight: 640; color: var(--ink); }
    ============================================================ */
 
 .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   background: var(--paper);
   border: var(--rule);
   border-radius: var(--radius);
@@ -614,6 +617,13 @@ tr.is-total td {
 /* ============================================================
    Quality / KOR lollipops
    ============================================================ */
+
+.kor-list {
+  flex: 1 1 auto;
+  justify-content: space-evenly;
+  gap: .45rem;
+  margin: .3rem 0;
+}
 
 .kor__row { display: grid; grid-template-columns: 12.5rem 1fr 5rem; gap: 1rem; align-items: center; }
 .kor__name { font-size: clamp(.88rem, min(1.1vw, 1.8vh), 1.06rem); font-weight: 560; }
@@ -901,6 +911,19 @@ tr.is-total td {
 .help dl { display: grid; grid-template-columns: auto 1fr; gap: .6rem 1.2rem; margin: 0; font-size: .88rem; }
 .help dt { font-family: var(--mono); font-size: .78rem; color: var(--terracotta); font-weight: 620; white-space: nowrap; }
 .help dd { margin: 0; color: var(--ink-soft); }
+
+/* A stretched card must not leave a dead band under its content. The title
+   keeps its natural height; whichever body element can usefully expand takes
+   the remaining space. Anything that cannot expand is centred instead. */
+.card > .card__title,
+.card > .risk__head { flex: 0 0 auto; }
+
+.card > .stat,
+.card > .bullets,
+.card > .chart-fill { flex: 1 1 auto; }
+
+.card > .stat,
+.card > .bullets { justify-content: center; }
 
 /* "Resourced from" tag that opens every source footer */
 .srcline__label {
