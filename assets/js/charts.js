@@ -415,7 +415,9 @@
     var mid = m.l + iw / 2;
     var X = function (v) { return (v / maxAbs) * (iw / 2); };
     var band = (H - m.t - m.b) / items.length;
-    var bh = Math.min(15, band * 0.56);
+    /* 21, not 15: with few rows in a tall card the old cap drew hairlines
+       adrift in white space. Only binds when a band exceeds ~38px. */
+    var bh = Math.min(21, band * 0.56);
 
     /* axis + zero line */
     var g = el('g', { class: 'grid' }, svg);
@@ -487,7 +489,11 @@
     }
 
     if (spec.caption) {
-      text(svg, W / 2, y0 + rows * (cell + gap) + 13, spec.caption, 'axis-label',
+      /* Clamp to the frame. The grid reserves capH but lays the caption out
+         from the grid's own bottom edge, and the two disagree by a few pixels
+         once the squares are height-constrained — enough to clip the caption. */
+      var capY = Math.min(y0 + rows * (cell + gap) + 13, H - 4);
+      text(svg, W / 2, capY, spec.caption, 'axis-label',
         { 'text-anchor': 'middle', 'font-size': 11.5 });
     }
   }
@@ -648,10 +654,11 @@
   function shareBar(host, spec) {
     var f = frame(host, 6), svg = f.svg, W = f.w, H = f.h;
     var total = spec.parts.reduce(function (s, p) { return s + p.value; }, 0);
-    /* Cap raised from 38px: in a tall card the old cap left the bar floating
-       in empty space. Scales with the host, so small risk-box bars are
-       unchanged while a full-width one gets satisfying weight. */
-    var x = 0, barH = Math.min(64, H * 0.42), top = (H - barH) / 2 - 6;
+    /* Cap raised 38 -> 64 -> 92px: in a tall card the old cap left the bar
+       floating in empty space. It only binds above ~220px of host, so short
+       hosts (the full-width band on slide 4) are unaffected and only a tall
+       risk box gets the extra weight. */
+    var x = 0, barH = Math.min(92, H * 0.42), top = (H - barH) / 2 - 6;
 
     spec.parts.forEach(function (p, i) {
       var w = (p.value / total) * W;

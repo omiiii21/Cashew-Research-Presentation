@@ -234,11 +234,15 @@ window.CHARTS = (function () {
       ]
     },
 
-    /* 02 — Kerala's shelling base, one square per 10 factories */
+    /* 02 — Kerala's shelling base, one square per 10 factories.
+       12 columns, not 21: the square size is the smaller of the width- and
+       height-derived fit, so a wide, shallow grid pins the squares tiny and
+       leaves the card looking empty no matter how much height it is given.
+       12 x 7 fills the box and reads the proportion more plainly. */
     keralaFactories: {
       units: 83,
       filled: 10,
-      cols: 21,
+      cols: 12,
       caption: 'each square = 10 factories'
     },
 
