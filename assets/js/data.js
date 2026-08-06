@@ -184,6 +184,43 @@ window.CHARTS = (function () {
     },
 
     /* --------------------------------------------------------
+       Slide 7 — India's own market.
+       Origin breakdown is 2023, the last year with a complete
+       partner-by-partner table (World Bank WITS / UN Comtrade,
+       HS 080130). It is labelled as such on the slide: 2026
+       reshuffled the top of this list and the deck says so
+       rather than passing old shares off as current.
+       -------------------------------------------------------- */
+    indiaOrigins: {
+      dp: 0,
+      single: true,
+      axis: true,
+      items: [
+        { label: 'Ghana',         a: 206, color: '#C05F3C' },
+        { label: "Côte d'Ivoire", a: 200, color: '#C05F3C' },
+        { label: 'Togo',          a: 160, color: '#C05F3C' },
+        { label: 'Benin',         a: 109, color: '#C05F3C' },
+        { label: 'Tanzania',      a:  87, color: '#D9A441' },
+        { label: 'Nigeria',       a:  82, color: '#C05F3C' },
+        { label: 'Senegal',       a:  81, color: '#C05F3C' },
+        { label: 'Guinea',        a:  80, color: '#C05F3C' },
+        { label: 'Burkina Faso',  a:  63, color: '#C05F3C' },
+        { label: 'Guinea-Bissau', a:  63, color: '#C05F3C' }
+      ]
+    },
+
+    /* The headline fact about India: it buys in more raw nuts than
+       it grows. Both bars are raw nuts, so the scale is honest. */
+    indiaGrownVsBought: {
+      dp: 0,
+      single: true,
+      items: [
+        { label: 'Grown at home',    a:  790, color: '#55703F', note: 'its own crop', noteColor: '#3F5730' },
+        { label: 'Bought from abroad', a: 1185, color: '#C05F3C', note: '1.5x more',  noteColor: '#8A3319' }
+      ]
+    },
+
+    /* --------------------------------------------------------
        Slide 9 — a visual for each of the three risks.
        -------------------------------------------------------- */
 

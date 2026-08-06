@@ -25,10 +25,11 @@ fell roughly twice as fast as raw tonnage**.
 | 4 | Asia | India, Vietnam, Cambodia, Indonesia |
 | 5 | West Africa | Côte d'Ivoire, Ghana, Nigeria, Benin, Togo, Senegal, Guinea-Bissau, Gambia, Burkina Faso |
 | 6 | Size versus export | The India-vs-Vietnam contrast |
-| 7 | Quality | Kernel per bag by country, and what losing 2 lbs costs |
-| 8 | Prices | Raw nuts and kernel, and the squeeze on factories |
-| 9 | Outlook | Three risks into 2027 |
-| 10 | Contact | Visiting card |
+| 7 | India's market | Crop size, imports by origin, and where demand is heading |
+| 8 | Quality | Kernel per bag by country, and what losing 2 lbs costs |
+| 9 | Prices | Raw nuts and kernel, and the squeeze on factories |
+| 10 | Outlook | Three risks into 2027 |
+| 11 | Contact | Visiting card |
 
 ## Presenting
 
