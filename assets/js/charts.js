@@ -143,6 +143,57 @@
     return step * mag;
   }
 
+  /* Charts inherit near-black label ink, which disappears if the chart is
+     placed on a dark card. Walk up to the first opaque background, measure
+     its luminance, and pick label/grid colours that actually contrast. */
+  function lum(rgb) {
+    var m = /rgba?\(([^)]+)\)/.exec(rgb || '');
+    if (!m) return 1;
+    var p = m[1].split(',').map(parseFloat);
+    if (p.length > 3 && p[3] === 0) return null;
+    var f = p.slice(0, 3).map(function (v) {
+      v /= 255;
+      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * f[0] + 0.7152 * f[1] + 0.0722 * f[2];
+  }
+
+  function bgInk(host) {
+    var n = host, L = null;
+    while (n && n !== document.documentElement) {
+      L = lum(getComputedStyle(n).backgroundColor);
+      if (L !== null) break;
+      n = n.parentElement;
+    }
+    if (L !== null && L < 0.35) {
+      return { strong: '#F7F1E4', soft: 'rgba(247,241,228,.8)', faint: 'rgba(247,241,228,.62)', grid: 'rgba(247,241,228,.22)', dark: true };
+    }
+    return { strong: C.ink, soft: C.inkSoft, faint: C.inkFaint, grid: C.edge, dark: false };
+  }
+
+  /* Luminance of a hex fill, for picking a label colour that reads on it. */
+  function hexLum(hex) {
+    var m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '').trim());
+    if (!m) return null;
+    var n = parseInt(m[1], 16);
+    var f = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(function (v) {
+      v /= 255;
+      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * f[0] + 0.7152 * f[1] + 0.0722 * f[2];
+  }
+
+  /* A hardcoded white label fails badly on the paler swatches — gold scored
+     2.2:1 and taupe 1.9:1, both under the 3:1 floor. Choose per fill.
+     The cut sits at 0.32 rather than the obvious 0.5: gold (#D9A441) has a
+     luminance of 0.42, so a higher threshold still handed it white. At 0.32
+     gold takes dark ink for 7.6:1, while leaf, terracotta, shell and slate
+     all stay below and keep white at 4.2:1 or better. */
+  function inkOn(color) {
+    var L = hexLum(color);
+    return (L !== null && L > 0.32) ? '#241A11' : '#FFFFFF';
+  }
+
   function box(host, ratio) {
     var w = host.clientWidth || host.parentElement.clientWidth || 800;
     var h = host.clientHeight;
@@ -160,7 +211,7 @@
       preserveAspectRatio: 'xMidYMid meet',
       role: 'img'
     }, host);
-    return { svg: svg, w: b.w, h: b.h };
+    return { svg: svg, w: b.w, h: b.h, ink: bgInk(host) };
   }
 
   /* ============================================================
@@ -249,7 +300,7 @@
        min-height from a per-row constant here used to push short viewports
        into overflow — bands shrink to fit instead. */
     var f = frame(host, null), svg = f.svg, W = f.w;
-    var H = f.h;
+    var H = f.h, INK = f.ink;
     var F = fonts();
 
     /* Measure the three text gutters so nothing can collide or clip. */
@@ -284,10 +335,10 @@
     var g = el('g', { class: 'grid' }, svg);
     for (var i = 0; i <= 4; i++) {
       var gx = m.l + (iw / 4) * i;
-      el('line', { x1: gx, x2: gx, y1: m.t - 4, y2: H - m.b, stroke: C.edge }, g);
+      el('line', { x1: gx, x2: gx, y1: m.t - 4, y2: H - m.b, stroke: INK.grid }, g);
       if (spec.axis) {
         text(g, gx, H - m.b + 19, fmt((maxV / 4) * i, spec.axisDp === undefined ? 0 : spec.axisDp),
-          'axis-label', { 'text-anchor': i === 0 ? 'start' : (i === 4 ? 'end' : 'middle'), 'font-size': FS.axis });
+          'axis-label', { 'text-anchor': i === 0 ? 'start' : (i === 4 ? 'end' : 'middle'), 'font-size': FS.axis, fill: INK.faint });
       }
     }
 
@@ -295,7 +346,7 @@
       var cy = m.t + band * i + band / 2;
 
       text(svg, m.l - 12, cy + 4.5, d.label, 'cat-label',
-        { 'text-anchor': 'end', fill: C.ink, 'font-size': FS.cat });
+        { 'text-anchor': 'end', fill: INK.strong, 'font-size': FS.cat });
 
       /* prior year — muted, sits behind */
       if (!single && d.b !== null && d.b !== undefined) {
@@ -316,12 +367,12 @@
                  { transform: 'scaleX(1)' }, 900, 160 + i * 45);
 
       var lbl = text(svg, m.l + Math.max(2, X(d.a)) + 9, cy + 4.5,
-        fmt(d.a, dp), 'value-label', { 'text-anchor': 'start', 'font-size': FS.val });
+        fmt(d.a, dp), 'value-label', { 'text-anchor': 'start', 'font-size': FS.val, fill: INK.strong });
       reveal(lbl, { opacity: 0 }, { opacity: 1 }, 500, 600 + i * 45);
 
       if (d.note) {
         var nt = text(svg, W - 8, cy + 4.5, d.note, 'value-label',
-          { 'text-anchor': 'end', fill: d.noteColor || C.inkFaint, 'font-size': FS.note });
+          { 'text-anchor': 'end', fill: (INK.dark ? INK.faint : (d.noteColor || C.inkFaint)), 'font-size': FS.note });
         reveal(nt, { opacity: 0 }, { opacity: 1 }, 500, 700 + i * 45);
       }
     });
@@ -373,7 +424,7 @@
       var w = Math.abs(X(d.value));
 
       text(svg, catX, cy + 4.5, d.label, 'cat-label',
-        { 'text-anchor': 'end', fill: C.ink, 'font-size': FS.cat });
+        { 'text-anchor': 'end', fill: INK.strong, 'font-size': FS.cat });
 
       var r = el('rect', {
         x: pos ? mid : mid - w, y: cy - bh / 2, width: Math.max(1.5, w), height: bh,
@@ -583,16 +634,17 @@
 
     spec.parts.forEach(function (p, i) {
       var w = (p.value / total) * W;
+      var fill = p.color || RAMP()[i % 6];
       var r = el('rect', {
         x: x, y: top, width: Math.max(1, w - 2), height: barH,
-        rx: 4, fill: p.color || RAMP()[i % 6]
+        rx: 4, fill: fill
       }, svg);
       reveal(r, { transform: 'scaleX(0)', transformOrigin: x + 'px 0px' }, { transform: 'scaleX(1)' }, 800, 120 + i * 90);
 
       if (w > 52) {
         var pct = (p.value / total) * 100;
         var t = text(svg, x + w / 2, top + barH / 2 + 4.5, fmt(pct, 0) + '%', '',
-          { 'text-anchor': 'middle', fill: '#fff', 'font-size': 12, 'font-weight': 680 });
+          { 'text-anchor': 'middle', fill: inkOn(fill), 'font-size': 12.5, 'font-weight': 700 });
         reveal(t, { opacity: 0 }, { opacity: 1 }, 400, 620 + i * 90);
       }
       if (w > 40) {

@@ -215,8 +215,10 @@ window.CHARTS = (function () {
       dp: 0,
       single: true,
       items: [
-        { label: 'Grown at home',    a:  790, color: '#55703F', note: 'its own crop', noteColor: '#3F5730' },
-        { label: 'Bought from abroad', a: 1185, color: '#C05F3C', note: '1.5x more',  noteColor: '#8A3319' }
+        /* Terracotta matches the West Africa bars in the origins chart
+           beside it, so the eye links "bought abroad" to where from. */
+        { label: 'Grown at home',      a:  790, color: '#55703F', note: 'its own crop', noteColor: '#3F5730' },
+        { label: 'Bought from abroad', a: 1185, color: '#C05F3C', note: '1.5x more',    noteColor: '#8A3319' }
       ]
     },
 
