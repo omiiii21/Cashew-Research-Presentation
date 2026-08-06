@@ -429,6 +429,22 @@ strong, b { font-weight: 640; color: var(--ink); }
 
 .stat__foot { font-size: clamp(.66rem, .76vw, .74rem); color: var(--ink-faint); line-height: 1.4; }
 
+/* Hero stat — where the number IS the slide's content rather than a caption
+   beside a chart, it scales up to fill the card instead of floating in it. */
+.stat--hero { gap: .55rem; }
+
+.stat--hero .stat__value {
+  font-size: clamp(2.9rem, min(7.4vw, 12.2vh), 7.4rem);
+  line-height: .92;
+}
+
+.stat--hero .stat__value .stat__unit { font-size: .3em; }
+
+.stat--hero .stat__label {
+  font-size: clamp(.98rem, min(1.42vw, 2.3vh), 1.35rem);
+  line-height: 1.35;
+}
+
 /* Delta chip — direction is carried by arrow glyph AND colour, never colour alone */
 .delta {
   display: inline-flex;

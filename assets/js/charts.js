@@ -384,7 +384,7 @@
      ============================================================ */
   function deltaBars(host, spec) {
     var items = spec.items;
-    var f = frame(host, null), svg = f.svg, W = f.w, H = f.h;
+    var f = frame(host, null), svg = f.svg, W = f.w, H = f.h, INK = f.ink;
     var F = fonts();
 
     var maxAbs = niceMax(Math.max.apply(null, items.map(function (d) { return Math.abs(d.value); })) * 1.02);
@@ -392,10 +392,18 @@
     /* Measure the widest category label and the widest value label. A fully
        negative bar puts its value label to the LEFT of the plot area, so the
        plot has to start clear of both — otherwise the text runs off the SVG. */
+    /* A country with no measurable change is not "+0.0%" — that reads as a
+       green 1px stub claiming growth we cannot evidence. Treat it as flat. */
+    var FLAT = 0.05;
+    var FLAT_TEXT = 'about the same';
+
     var labelW = 0, valW = 0;
     items.forEach(function (d) {
       labelW = Math.max(labelW, measure(d.label, FS.cat, 520, F.sans));
-      valW = Math.max(valW, measure((d.value >= 0 ? '+' : '') + fmt(d.value, 1) + '%', FS.val, 640, F.mono));
+      var vt = Math.abs(d.value) < FLAT
+        ? FLAT_TEXT
+        : (d.value >= 0 ? '+' : '') + fmt(d.value, 1) + '%';
+      valW = Math.max(valW, measure(vt, FS.val, 640, F.mono));
     });
     labelW = Math.min(labelW, W * 0.36);
 
@@ -425,6 +433,16 @@
 
       text(svg, catX, cy + 4.5, d.label, 'cat-label',
         { 'text-anchor': 'end', fill: INK.strong, 'font-size': FS.cat });
+
+      if (Math.abs(d.value) < FLAT) {
+        /* neutral dot on the zero line, so the row reads as deliberate */
+        var dot = el('circle', { cx: mid, cy: cy, r: Math.max(3.5, bh * 0.3), fill: C.inkFaint }, svg);
+        reveal(dot, { opacity: 0 }, { opacity: .9 }, 480, 120 + i * 50);
+        var flb = text(svg, mid + 13, cy + 4.5, FLAT_TEXT, 'value-label',
+          { 'text-anchor': 'start', fill: C.inkFaint, 'font-size': FS.val });
+        reveal(flb, { opacity: 0 }, { opacity: 1 }, 480, 620 + i * 50);
+        return;
+      }
 
       var r = el('rect', {
         x: pos ? mid : mid - w, y: cy - bh / 2, width: Math.max(1.5, w), height: bh,
@@ -630,7 +648,10 @@
   function shareBar(host, spec) {
     var f = frame(host, 6), svg = f.svg, W = f.w, H = f.h;
     var total = spec.parts.reduce(function (s, p) { return s + p.value; }, 0);
-    var x = 0, barH = Math.min(38, H * 0.5), top = (H - barH) / 2 - 6;
+    /* Cap raised from 38px: in a tall card the old cap left the bar floating
+       in empty space. Scales with the host, so small risk-box bars are
+       unchanged while a full-width one gets satisfying weight. */
+    var x = 0, barH = Math.min(64, H * 0.42), top = (H - barH) / 2 - 6;
 
     spec.parts.forEach(function (p, i) {
       var w = (p.value / total) * W;
