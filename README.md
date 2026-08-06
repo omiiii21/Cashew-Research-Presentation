@@ -1,4 +1,4 @@
-# The 2026 Raw Cashew Crop — Asia & Africa
+# The 2025–2026 Raw Cashewnut — Asia & Africa
 
 A ten-minute executive conference presentation on the 2026 raw cashew nut season,
 built as a self-contained HTML deck for GitHub Pages.
